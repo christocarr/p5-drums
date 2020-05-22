@@ -4,6 +4,7 @@ let hPhrase, cPhrase, bPhrase;
 let drums;
 let bpmCTRL;
 let beatLength;
+let cellWidth;
 
 function preload() {
   hh = loadSound('assets/hh_sample.mp3');
@@ -17,6 +18,7 @@ function setup() {
   createCanvas(320, 60);
 
   beatLength = 16;
+  cellWidth = width / beatLength;
 
   hPat = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   cPat = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
@@ -51,7 +53,7 @@ function setup() {
   stroke('gray');
   strokeWeight(2);
   for (let i = 0; i < beatLength + 1; i++) {
-    line(i * (width / beatLength), 0, i * (width / beatLength), height);
+    line(i * cellWidth, 0, i * cellWidth, height);
   }
   for (let i = 0; i < 4; i++) {
     line(0, i * (height / 3), width, i * (height / 3));
@@ -59,17 +61,17 @@ function setup() {
   noStroke();
   for (let i = 0; i < beatLength; i++) {
     if(hPat[i] === 1) {
-      ellipse(i * (width / beatLength) + 0.5 * (width / beatLength), height / 6, 10)
+      ellipse(i * cellWidth + 0.5 * cellWidth, height / 6, 10)
     }
   }
   for (let i = 0; i < beatLength; i++) {
     if(cPat[i] === 1) {
-      ellipse(i * (width / beatLength) + 0.5 * (width / beatLength), height / 2, 10)
+      ellipse(i * cellWidth + 0.5 * cellWidth, height / 2, 10)
     }
   }
   for (let i = 0; i < beatLength; i++) {
     if(bPat[i] === 1) {
-      ellipse(i * (width / beatLength) + 0.5 * (width / beatLength), height * (5 / 6), 10)
+      ellipse(i * cellWidth + 0.5 * cellWidth, height * (5 / 6), 10)
     }
   }
 }
