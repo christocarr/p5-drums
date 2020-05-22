@@ -15,7 +15,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(320, 60);
+  let cnv = createCanvas(320, 60);
+  cnv.mousePressed(canvasClicked);
 
   beatLength = 16;
   cellWidth = width / beatLength;
@@ -60,58 +61,57 @@ function setup() {
   }
   noStroke();
   for (let i = 0; i < beatLength; i++) {
-    if(hPat[i] === 1) {
-      ellipse(i * cellWidth + 0.5 * cellWidth, height / 6, 10)
+    if (hPat[i] === 1) {
+      ellipse(i * cellWidth + 0.5 * cellWidth, height / 6, 10);
     }
   }
   for (let i = 0; i < beatLength; i++) {
-    if(cPat[i] === 1) {
-      ellipse(i * cellWidth + 0.5 * cellWidth, height / 2, 10)
+    if (cPat[i] === 1) {
+      ellipse(i * cellWidth + 0.5 * cellWidth, height / 2, 10);
     }
   }
   for (let i = 0; i < beatLength; i++) {
-    if(bPat[i] === 1) {
-      ellipse(i * cellWidth + 0.5 * cellWidth, height * (5 / 6), 10)
+    if (bPat[i] === 1) {
+      ellipse(i * cellWidth + 0.5 * cellWidth, height * (5 / 6), 10);
     }
   }
-}
-
-function mouseClicked() {
-
-  hPhrase = new p5.Phrase(
-    'hh',
-    (time) => {
-      hh.play(time);
-    },
-    hPat
-  );
-
-  cPhrase = new p5.Phrase(
-    'clap',
-    (time) => {
-      clap.play(time);
-    },
-    cPat
-  );
-
-  bPhrase = new p5.Phrase(
-    'bass',
-    (time) => {
-      bass.play(time);
-    },
-    bPat
-  );
-
-  drums = new p5.Part();
-
-  drums.addPhrase(hPhrase);
-  drums.addPhrase(cPhrase);
-  drums.addPhrase(bPhrase);
-
-  drums.setBPM('60');
 }
 
 function keyPressed() {
+  if (keyCode === ENTER) {
+    hPhrase = new p5.Phrase(
+      'hh',
+      (time) => {
+        hh.play(time);
+      },
+      hPat
+    );
+
+    cPhrase = new p5.Phrase(
+      'clap',
+      (time) => {
+        clap.play(time);
+      },
+      cPat
+    );
+
+    bPhrase = new p5.Phrase(
+      'bass',
+      (time) => {
+        bass.play(time);
+      },
+      bPat
+    );
+
+    drums = new p5.Part();
+
+    drums.addPhrase(hPhrase);
+    drums.addPhrase(cPhrase);
+    drums.addPhrase(bPhrase);
+
+    drums.setBPM('60');
+  }
+
   if (key === ' ') {
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded()) {
       if (!drums.isPlaying) {
@@ -124,3 +124,19 @@ function keyPressed() {
     }
   }
 }
+
+// function keyPressed() {
+//   if (key === ' ') {
+//     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded()) {
+//       if (!drums.isPlaying) {
+//         drums.loop();
+//       } else {
+//         drums.stop();
+//       }
+//     } else {
+//       console.log('Still loading');
+//     }
+//   }
+// }
+
+function canvasClicked() {}
