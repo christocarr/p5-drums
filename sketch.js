@@ -25,27 +25,6 @@ function setup() {
   cPat = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
   bPat = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
 
-  // hPhrase = new p5.Phrase('hh', (time) => {
-  //   hh.play(time)
-
-  // }, hPat)
-
-  // cPhrase = new p5.Phrase('clap', (time) => {
-  //   clap.play(time)
-
-  // }, cPat)
-
-  // bPhrase = new p5.Phrase('bass', (time) => {
-  //   bass.play(time)
-
-  // }, bPat)
-
-  // drums = new p5.Part()
-
-  // drums.addPhrase(hPhrase)
-  // drums.addPhrase(cPhrase)
-  // drums.addPhrase(bPhrase)
-
   bpmCTRL = createSlider(30, 600, 80, 1);
   bpmCTRL.position(10, 70);
   bpmCTRL.input(() => drums.setBPM(bpmCTRL.value()));
@@ -53,6 +32,11 @@ function setup() {
   background(80);
   stroke('gray');
   strokeWeight(2);
+
+  drawMatrix();
+}
+
+function drawMatrix() {
   for (let i = 0; i < beatLength + 1; i++) {
     line(i * cellWidth, 0, i * cellWidth, height);
   }
@@ -125,18 +109,8 @@ function keyPressed() {
   }
 }
 
-// function keyPressed() {
-//   if (key === ' ') {
-//     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded()) {
-//       if (!drums.isPlaying) {
-//         drums.loop();
-//       } else {
-//         drums.stop();
-//       }
-//     } else {
-//       console.log('Still loading');
-//     }
-//   }
-// }
-
-function canvasClicked() {}
+function canvasClicked() {
+  let rowClicked = floor((3 * mouseY) / height);
+  let columnClicked = floor((16 * mouseX) / width);
+  console.log('row:', rowClicked, 'column:', columnClicked);
+}
