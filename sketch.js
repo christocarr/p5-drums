@@ -112,7 +112,11 @@ function canvasClicked() {
   let rowClicked = floor((3 * mouseY) / height);
   let indexClicked = floor((16 * mouseX) / width);
   if (rowClicked === 0) {
-    hPat[indexClicked] = 0
+    hPat[indexClicked] = hPat[indexClicked] === 1 ? 0 : 1
+  } else if (rowClicked === 1) {
+    cPat[indexClicked] = cPat[indexClicked] === 1 ? 0 : 1
+  } else if (rowClicked === 2) {
+    bPat[indexClicked] = bPat[indexClicked] === 1 ? 0 : 1
   }
 
   drawMatrix()
