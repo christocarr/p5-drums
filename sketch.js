@@ -3,6 +3,7 @@ let hh, clap, bass; //a container that holds the sound source
 let hPat, cPat, bPat; //pattern for beats that can be changed
 let hPhrase, cPhrase, bPhrase;
 let drums;
+let bpmCTRL
 
 function preload() {
   hh = loadSound('assets/hh_sample.mp3')
@@ -38,13 +39,16 @@ function setup() {
   // drums.addPhrase(hPhrase)
   // drums.addPhrase(cPhrase)
   // drums.addPhrase(bPhrase)
-
+  
+  bpmCTRL = createSlider(30, 600, 80, 1)
+  bpmCTRL.position(10, 70)
+  bpmCTRL.input(() => drums.setBPM(bpmCTRL.value()))
 }
 
 function mouseClicked() {
-  hPat = [1, 0, 1, 0];
-  cPat = [0, 1, 0, 0];
-  bPat = [0, 0, 0, 0];
+  hPat = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  cPat = [0, 0, 0, 0];
+  bPat = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
 
   hPhrase = new p5.Phrase('hh', (time) => {
     hh.play(time)
@@ -67,6 +71,7 @@ function mouseClicked() {
   drums.addPhrase(cPhrase)
   drums.addPhrase(bPhrase)
 
+  drums.setBPM('60')
   
 }
 
