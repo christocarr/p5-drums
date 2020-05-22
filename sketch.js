@@ -1,19 +1,22 @@
-
 let hh, clap, bass; //a container that holds the sound source
 let hPat, cPat, bPat; //pattern for beats that can be changed
 let hPhrase, cPhrase, bPhrase;
 let drums;
-let bpmCTRL
+let bpmCTRL;
+let beatLength;
 
 function preload() {
-  hh = loadSound('assets/hh_sample.mp3')
+  hh = loadSound('assets/hh_sample.mp3');
 
-  clap = loadSound('assets/clap_sample.mp3')
+  clap = loadSound('assets/clap_sample.mp3');
 
-  bass = loadSound('assets/bass_sample.mp3')
+  bass = loadSound('assets/bass_sample.mp3');
 }
 
 function setup() {
+  createCanvas(320, 60);
+
+  beatLength = 16;
 
   // hPat = [1, 0, 1, 0];
   // cPat = [0, 0, 0, 0];
@@ -35,14 +38,24 @@ function setup() {
   // }, bPat)
 
   // drums = new p5.Part()
-  
+
   // drums.addPhrase(hPhrase)
   // drums.addPhrase(cPhrase)
   // drums.addPhrase(bPhrase)
-  
-  bpmCTRL = createSlider(30, 600, 80, 1)
-  bpmCTRL.position(10, 70)
-  bpmCTRL.input(() => drums.setBPM(bpmCTRL.value()))
+
+  bpmCTRL = createSlider(30, 600, 80, 1);
+  bpmCTRL.position(10, 70);
+  bpmCTRL.input(() => drums.setBPM(bpmCTRL.value()));
+
+  background(80);
+  stroke('gray');
+  strokeWeight(2);
+  for (let i = 0; i < beatLength + 1; i++) {
+    line(i * (width / beatLength), 0, i * (width / beatLength), height);
+  }
+  for (let i = 0; i < 4; i++) {
+    line(0, i * (height / 3), width, i * (height / 3));
+  }
 }
 
 function mouseClicked() {
@@ -50,41 +63,49 @@ function mouseClicked() {
   cPat = [0, 0, 0, 0];
   bPat = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
 
-  hPhrase = new p5.Phrase('hh', (time) => {
-    hh.play(time)
+  hPhrase = new p5.Phrase(
+    'hh',
+    (time) => {
+      hh.play(time);
+    },
+    hPat
+  );
 
-  }, hPat)
+  cPhrase = new p5.Phrase(
+    'clap',
+    (time) => {
+      clap.play(time);
+    },
+    cPat
+  );
 
-  cPhrase = new p5.Phrase('clap', (time) => {
-    clap.play(time)
+  bPhrase = new p5.Phrase(
+    'bass',
+    (time) => {
+      bass.play(time);
+    },
+    bPat
+  );
 
-  }, cPat)
+  drums = new p5.Part();
 
-  bPhrase = new p5.Phrase('bass', (time) => {
-    bass.play(time)
+  drums.addPhrase(hPhrase);
+  drums.addPhrase(cPhrase);
+  drums.addPhrase(bPhrase);
 
-  }, bPat)
-
-  drums = new p5.Part()
-  
-  drums.addPhrase(hPhrase)
-  drums.addPhrase(cPhrase)
-  drums.addPhrase(bPhrase)
-
-  drums.setBPM('60')
-  
+  drums.setBPM('60');
 }
 
 function keyPressed() {
   if (key === ' ') {
     if (hh.isLoaded() && clap.isLoaded() && bass.isLoaded()) {
       if (!drums.isPlaying) {
-        drums.loop()
+        drums.loop();
       } else {
-        drums.stop()
+        drums.stop();
       }
     } else {
-      console.log('Still loading')
+      console.log('Still loading');
     }
   }
 }
