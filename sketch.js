@@ -5,6 +5,7 @@ let drums;
 let bpmCTRL;
 let beatLength;
 let cellWidth;
+let seqPat;
 
 function preload() {
   hh = loadSound('assets/hh_sample.mp3');
@@ -24,6 +25,7 @@ function setup() {
   hPat = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   cPat = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
   bPat = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
+  seqPat = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 
   bpmCTRL = createSlider(30, 600, 80, 1);
   bpmCTRL.position(10, 70);
@@ -36,6 +38,7 @@ function drawMatrix() {
   background(80);
   stroke('gray');
   strokeWeight(2);
+  fill('white')
   for (let i = 0; i < beatLength + 1; i++) {
     line(i * cellWidth, 0, i * cellWidth, height);
   }
@@ -92,6 +95,8 @@ function keyPressed() {
     drums.addPhrase(cPhrase);
     drums.addPhrase(bPhrase);
 
+    drums.addPhrase('seq', sequence, seqPat)
+
     drums.setBPM('60');
   }
 
@@ -120,4 +125,13 @@ function canvasClicked() {
   }
 
   drawMatrix()
+}
+
+function sequence(time, beatIndex) {
+  setTimeout(() => {
+    drawMatrix()
+    stroke('red')
+    fill(255, 0, 0, 33)
+    rect((beatIndex - 1) * cellWidth, 0, cellWidth, height)
+  }, time * 1000)
 }
