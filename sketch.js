@@ -29,14 +29,13 @@ function setup() {
   bpmCTRL.position(10, 70);
   bpmCTRL.input(() => drums.setBPM(bpmCTRL.value()));
 
-  background(80);
-  stroke('gray');
-  strokeWeight(2);
-
   drawMatrix();
 }
 
 function drawMatrix() {
+  background(80);
+  stroke('gray');
+  strokeWeight(2);
   for (let i = 0; i < beatLength + 1; i++) {
     line(i * cellWidth, 0, i * cellWidth, height);
   }
@@ -111,6 +110,10 @@ function keyPressed() {
 
 function canvasClicked() {
   let rowClicked = floor((3 * mouseY) / height);
-  let columnClicked = floor((16 * mouseX) / width);
-  console.log('row:', rowClicked, 'column:', columnClicked);
+  let indexClicked = floor((16 * mouseX) / width);
+  if (rowClicked === 0) {
+    hPat[indexClicked] = 0
+  }
+
+  drawMatrix()
 }
