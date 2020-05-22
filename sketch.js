@@ -18,9 +18,9 @@ function setup() {
 
   beatLength = 16;
 
-  // hPat = [1, 0, 1, 0];
-  // cPat = [0, 0, 0, 0];
-  // bPat = [0, 0, 0, 0];
+  hPat = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  cPat = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
+  bPat = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
 
   // hPhrase = new p5.Phrase('hh', (time) => {
   //   hh.play(time)
@@ -56,12 +56,25 @@ function setup() {
   for (let i = 0; i < 4; i++) {
     line(0, i * (height / 3), width, i * (height / 3));
   }
+  noStroke();
+  for (let i = 0; i < beatLength; i++) {
+    if(hPat[i] === 1) {
+      ellipse(i * (width / beatLength) + 0.5 * (width / beatLength), height / 6, 10)
+    }
+  }
+  for (let i = 0; i < beatLength; i++) {
+    if(cPat[i] === 1) {
+      ellipse(i * (width / beatLength) + 0.5 * (width / beatLength), height / 2, 10)
+    }
+  }
+  for (let i = 0; i < beatLength; i++) {
+    if(bPat[i] === 1) {
+      ellipse(i * (width / beatLength) + 0.5 * (width / beatLength), height * (5 / 6), 10)
+    }
+  }
 }
 
 function mouseClicked() {
-  hPat = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
-  cPat = [0, 0, 0, 0];
-  bPat = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
 
   hPhrase = new p5.Phrase(
     'hh',
